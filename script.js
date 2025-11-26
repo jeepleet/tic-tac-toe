@@ -35,21 +35,29 @@ const gameController = (function(board, playerOne, playerTwo) {
                 [2,5,8], // Diagonals
                 [0,4,8], // Diagonals
                 [2,4,6], // Diagonals
+            ];
+          
+            const currentBoard = board.getBoard();
+            for (let i = 0; i < winningCombinations.length; i++ ) {
+                const combo = winningCombinations[i]; 
+                 let a = currentBoard[combo[0]];
+                 let b = currentBoard[combo[1]];
+                 let c = currentBoard[combo[2]];
+                 
+                 if (a !== "" && a === b && a === c ) {
+                    return gameOver = true;
 
-            ]
-    checkWinner();
-
-
-    console.log(winningCombinations);     
+                 }
+                 
+            }         
     }
-    
-    
-                
-
-
+                  
 return {
     playRound: function(cellIndex) {
         board.playMove(currentPlayer.marker, cellIndex);
+        if (checkWinner()) {
+            return console.log(currentPlayer.name + "Won");
+        }
         if (currentPlayer === playerOne) {
             currentPlayer = playerTwo;
         } else {
@@ -60,8 +68,13 @@ return {
 }
   })(game, playerOne, playerTwo);
 
-  gameController.playRound(0);
-  console.log(game.getBoard());
-  gameController.playRound(4);
-  console.log(game.getBoard());
+console.log("round 1");
+gameController.playRound(0);
+console.log(game.gameBoard());
+
+console.log("round 2");
+gameController.playRound(3);
+console.log(game.getBoard());
+
+
 
