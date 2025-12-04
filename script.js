@@ -15,13 +15,14 @@ function createPlayer(name, marker) {
     return {
         name: name,
         marker: marker,
+        score: 0,
     };
 }
-const playerOne = createPlayer("Jeppe", "0");
-const playerTwo = createPlayer("Jørgen", "X");
 
-
-const gameController = (function(board, playerOne, playerTwo) {
+const gameController = (function() {
+    const board = gameBoardFactory();
+    const playerOne = createPlayer("Jeppe", "0");
+    const playerTwo = createPlayer("Jørgen", "0");
     let currentPlayer = playerOne;
     let gameOver = false;
        
@@ -56,7 +57,8 @@ return {
     playRound: function(cellIndex) {
         board.playMove(currentPlayer.marker, cellIndex);
         if (checkWinner()) {
-            return console.log(currentPlayer.name + "Won");
+            currentPlayer.score++;
+            return console.log(currentPlayer.name + "Won" + currentPlayer.score);
         }
         if (currentPlayer === playerOne) {
             currentPlayer = playerTwo;
@@ -64,17 +66,21 @@ return {
             currentPlayer = playerOne;
         }
         },
+        getBoard: board.getBoard
+
 
 }
-  })(game, playerOne, playerTwo);
+  })();
 
 console.log("round 1");
 gameController.playRound(0);
-console.log(game.gameBoard());
+console.log(gameController.getBoard());
 
 console.log("round 2");
 gameController.playRound(3);
 console.log(game.getBoard());
+
+
 
 
 
